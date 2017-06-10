@@ -2,8 +2,12 @@
 
 #include <iostream>  
 #include <string>  
+#ifdef __APPLE__
+#include "opencl.hpp"
+#else
 #include <CL/cl.hpp>
-  
+#endif  
+
 int main(void) {  
 	VECTOR_CLASS<cl::Platform> platforms;
 	VECTOR_CLASS<cl::Device> devices;
@@ -46,7 +50,7 @@ int main(void) {
 	cl::CommandQueue queue = cl::CommandQueue(context, dev, CL_QUEUE_PROFILING_ENABLE);  
 
 	std::string src_string = 
-		"__kernel void factor8to1(unsigned int limit, global int *results)  \n"
+		"__kernel void factor8to1(int limit, global int *results)  \n"
 		"{                                    \n"
 		"	int i = get_global_id(0);         \n"
 		"	                                  \n"
